@@ -2,10 +2,14 @@ import torch
 from diffusers import CogVideoXImageToVideoPipeline
 from diffusers.utils import export_to_video, load_image
 
-pipe = CogVideoXImageToVideoPipeline.from_pretrained("THUDM/CogVideoX-5b-I2V", torch_dtype=torch.bfloat16)
+pipe = CogVideoXImageToVideoPipeline.from_pretrained(
+    "THUDM/CogVideoX-5b-I2V", torch_dtype=torch.bfloat16
+)
 lora_path = "your lora path"
 lora_rank = 256
-pipe.load_lora_weights(lora_path, weight_name="pytorch_lora_weights.safetensors", adapter_name="test_1")
+pipe.load_lora_weights(
+    lora_path, weight_name="pytorch_lora_weights.safetensors", adapter_name="test_1"
+)
 pipe.fuse_lora(lora_scale=1 / lora_rank)
 pipe.to("cuda")
 
